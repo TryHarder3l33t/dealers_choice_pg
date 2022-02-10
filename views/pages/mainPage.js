@@ -23,7 +23,7 @@ module.exports = (chuckers) => html`
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#">CHUCKIG</a>
+            <a class="navbar-brand" href="/">CHUCKIG</a>
             <button
               class="navbar-toggler"
               type="button"
@@ -57,7 +57,7 @@ module.exports = (chuckers) => html`
           alt="..."
         />
         <div class="row mb-2" >
-        
+
         
             ${chuckers.map(
               (chuck) => html`<div class="col-md-4">
