@@ -58,18 +58,33 @@ module.exports = () => html`<!DOCTYPE html>
         />
           </div>
           </div>
-          <div class"col-5">
- <form method="post" action="/">
-              <label for="name">Image URL</label>
+          <div class"col-5"> 
+          <div class="row" style="margin-bottom: 100px;">
+          <form method="post" action="/">
+          
+          
+          
+          
+          <div class="col-10"><h3>Image URL</h3>
+          <label for="name"></label>
               <input type="text" name="image" />
+              </div>
+              
+          <div class="col-10"><h3>Title</h3>
+          <label for="title"></label>
+              <input type="text" name="title" /></div>
+          <div class="col-10"><h3>Write About Chuck</h3>
+          <label for="content"></label>
+              <textarea name="content"></textarea></div>
+              
 
-              <label for="title">Title</label>
-              <input type="text" name="title" />
+              
 
-              <label for="content"> Write about Chuck</label>
-              <textarea name="content"></textarea>
+              
               <button type="submit">Submit</button>
             </form>
+            </div>
+ 
           </div>
 
 
