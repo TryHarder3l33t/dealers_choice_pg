@@ -2,20 +2,21 @@
 console.log("Hello World Node is running behind the scenes");
 const PORT = process.env.PORT || 8765;
 const express = require("express");
-const { reset } = require("nodemon");
 const { Pool } = require("pg");
 const fs = require("fs");
 const path = require("path");
+const mainPage = require("./views/pages/mainPage");
+const detail = require("./views/pages/detail");
 
 //You use the local DB with your name on it while developing so you should seed the db. This is the connnection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   //For deployment
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  //   ssl: {
+  //     rejectUnauthorized: false,
+  //   },
   //For local development
-  //ssl: false,
+  ssl: false,
 });
 
 const seeder = async () => {
@@ -35,17 +36,39 @@ const seeder = async () => {
 seeder();
 
 express()
-  .get("/", (req, res) => {
-    res.send("HELLO Express");
-  })
-  .get("/db", async (req, res) => {
+  .use(express.static(path.join(__dirname, "public")))
+
+  .get("/", async (req, res) => {
     try {
       const client = await pool.connect();
       //const result = await client.query("SELECT * FROM users");
-      const result = await client.query("SELECT * FROM chucksters");
-      const results = { results: result ? result.rows : null };
+      const results = await client.query("SELECT * FROM chucksters");
+
       //res.render("pages/db", results);
-      res.send(results);
+      //res.send(results);
+      //res.render("pages/main", results);
+      res.send(mainPage(results.rows));
+
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  })
+  .get("/:id", async (req, res) => {
+    try {
+      const client = await pool.connect();
+      //const result = await client.query("SELECT * FROM users ");
+      const result = await client.query(
+        "SELECT * FROM chucksters WHERE id = $1",
+        [req.params.id]
+      );
+
+      //res.render("pages/db", results);
+      //res.send(results);
+      //res.render("pages/main", results);
+      res.send(detail(result.rows[0]));
+
       client.release();
     } catch (err) {
       console.error(err);
