@@ -15,7 +15,7 @@ const pool = new Pool({
     rejectUnauthorized: false,
   },
   //For local development
-  //   ssl: false,
+  //ssl: false,
 });
 
 const seeder = async () => {
@@ -41,8 +41,8 @@ express()
   .get("/db", async (req, res) => {
     try {
       const client = await pool.connect();
-      const result = await client.query("SELECT * FROM users");
-      //   const result = await client.query("SELECT * FROM test_table");
+      //const result = await client.query("SELECT * FROM users");
+      const result = await client.query("SELECT * FROM chucksters");
       const results = { results: result ? result.rows : null };
       //res.render("pages/db", results);
       res.send(results);
@@ -53,3 +53,5 @@ express()
     }
   })
   .listen(PORT, () => console.log(`Express is listening on ${PORT}`));
+
+//   INSERT INTO chucksters (title_chucksters, content_chcksters, img_chucksters, date ) VALUES ('', '', '' );
