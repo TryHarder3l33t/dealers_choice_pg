@@ -7,6 +7,7 @@ const fs = require("fs");
 const path = require("path");
 const mainPage = require("./views/pages/mainPage");
 const detail = require("./views/pages/detail");
+const addPost = require("./views/pages/addPost");
 
 //You use the local DB with your name on it while developing so you should seed the db. This is the connnection
 const pool = new Pool({
@@ -36,8 +37,29 @@ const seeder = async () => {
 seeder();
 
 express()
+  .use(express.json())
+  .use(express.urlencoded({ extended: false }))
   .use(express.static(path.join(__dirname, "public")))
+  .post("/", async (req, res) => {
+    try {
+      const client = await pool.connect();
+      console.log(req.body);
+      const { image, title, content } = req.body;
+      console.log(image, title, content);
 
+      let response = await client.query(
+        "INSERT INTO chucksters (title_chucksters, content_chucksters, img_chucksters ) VALUES ($1, $2, $3) RETURNING *",
+        [title, content, image]
+      );
+      const chuck = response.rows[0];
+      console.log(chuck);
+      client.release();
+      res.redirect(`/${chuck.id}`);
+    } catch (err) {
+      console.log(err);
+      next();
+    }
+  })
   .get("/", async (req, res) => {
     try {
       const client = await pool.connect();
@@ -55,6 +77,9 @@ express()
       res.send("Error " + err);
     }
   })
+  .get("/add", (req, res) => {
+    res.send(addPost());
+  })
   .get("/:id", async (req, res) => {
     try {
       const client = await pool.connect();
@@ -63,7 +88,6 @@ express()
         "SELECT * FROM chucksters WHERE id = $1",
         [req.params.id]
       );
-
       //res.render("pages/db", results);
       //res.send(results);
       //res.render("pages/main", results);
