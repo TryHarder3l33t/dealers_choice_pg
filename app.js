@@ -12,11 +12,11 @@ const detail = require("./views/pages/detail");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   //For deployment
-  //   ssl: {
-  //     rejectUnauthorized: false,
-  //   },
+  ssl: {
+    rejectUnauthorized: false,
+  },
   //For local development
-  ssl: false,
+  //ssl: false,
 });
 
 const seeder = async () => {
