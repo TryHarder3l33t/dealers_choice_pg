@@ -20,6 +20,10 @@ const pool = new Pool({
   //ssl: false,
 });
 
+// const pool = new Pool(
+//   process.env.DATABASE_URL || "postgress://localhost/ericrodgers"
+// );
+
 const seeder = async () => {
   try {
     //await client.connect();

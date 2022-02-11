@@ -111,7 +111,7 @@ module.exports = (chuck) => html`
                     <img
                       
                       src="${chuck.img_chucksters}"
-                      class="card-img-right flex-auto d-none d-md-block"
+                      class="img-fluid"
                       alt="Card image cap"
                       style="max-width: 100%"
                       

@@ -83,7 +83,7 @@ module.exports = (chuckers) => html`
                     <img
                       col-5
                       src="${chuck.img_chucksters}"
-                      class="card-img-right flex-auto d-none d-md-block"
+                      class="img-fluid"
                       alt="Card image cap"
                       max-width="100%"
                       height="250vw"
@@ -121,3 +121,4 @@ module.exports = (chuckers) => html`
     </div>
     </body>
   </html>`;
+//class="card-img-right flex-auto d-none d-md-block"
